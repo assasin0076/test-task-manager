@@ -51,7 +51,6 @@ export default {
       class="task-col"
       handle=".drag-handle"
     >
-      <div class="col-name">{{ col.name }}</div>
       <template #item="{ element }">
         <div class="task-element">
           <div class="drag-handle">::</div>
