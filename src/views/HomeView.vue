@@ -49,6 +49,7 @@ export default {
         :list="col.content"
         tag="div"
         group="tasks"
+        class="drag-area"
         handle=".drag-handle"
       >
         <template #item="{ element }">
@@ -73,6 +74,10 @@ export default {
     border-radius: 4px;
     width: 300px;
     max-width: 300px;
+    .drag-area {
+      min-height: 100px;
+      height: 100%;
+    }
     &:not(:last-child) {
       margin-right: 12px;
     }
