@@ -1,5 +1,6 @@
 <script>
 import { nanoid } from "nanoid";
+import draggable from "vuedraggable";
 
 export default {
   data: () => ({
@@ -33,19 +34,32 @@ export default {
       },
     ],
   }),
+  components: {
+    draggable,
+  },
 };
 </script>
 
 <template>
   <div class="main-content">
-    <div v-for="col in tasks" :key="col.id" class="task-col">
+    <draggable
+      v-for="col in tasks"
+      :key="col.id"
+      itemKey="id"
+      :list="col.content"
+      group="tasks"
+      class="task-col"
+      handle=".drag-handle"
+    >
       <div class="col-name">{{ col.name }}</div>
-      <div v-for="task in col.content" :key="task.id" class="task-element">
-        <div class="drag-element">::</div>
-        <div class="task-name">{{ task.label }}</div>
-        <div class="task-desc">{{ task.description }}</div>
-      </div>
-    </div>
+      <template #item="{ element }">
+        <div class="task-element">
+          <div class="drag-handle">::</div>
+          <div class="task-name">{{ element.label }}</div>
+          <div class="task-desc">{{ element.description }}</div>
+        </div>
+      </template>
+    </draggable>
   </div>
 </template>
 
@@ -73,7 +87,7 @@ export default {
       &:not(:last-child) {
         margin-bottom: 4px;
       }
-      .drag-element {
+      .drag-handle {
         cursor: pointer;
         position: absolute;
         right: 0;
@@ -85,6 +99,15 @@ export default {
         align-items: center;
       }
     }
+  }
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.5s ease;
+  }
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
   }
 }
 </style>
