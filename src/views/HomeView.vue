@@ -42,23 +42,24 @@ export default {
 
 <template>
   <div class="main-content">
-    <draggable
-      v-for="col in tasks"
-      :key="col.id"
-      itemKey="id"
-      :list="col.content"
-      group="tasks"
-      class="task-col"
-      handle=".drag-handle"
-    >
-      <template #item="{ element }">
-        <div class="task-element">
-          <div class="drag-handle">::</div>
-          <div class="task-name">{{ element.label }}</div>
-          <div class="task-desc">{{ element.description }}</div>
-        </div>
-      </template>
-    </draggable>
+    <div v-for="col in tasks" :key="col.id" class="task-col">
+      <div class="col-name">{{ col.name }}</div>
+      <draggable
+        itemKey="id"
+        :list="col.content"
+        tag="div"
+        group="tasks"
+        handle=".drag-handle"
+      >
+        <template #item="{ element }">
+          <div class="task-element">
+            <div class="drag-handle">::</div>
+            <div class="task-name">{{ element.label }}</div>
+            <div class="task-desc">{{ element.description }}</div>
+          </div>
+        </template>
+      </draggable>
+    </div>
   </div>
 </template>
 
@@ -98,15 +99,6 @@ export default {
         align-items: center;
       }
     }
-  }
-  .list-enter-active,
-  .list-leave-active {
-    transition: all 0.5s ease;
-  }
-  .list-enter-from,
-  .list-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
   }
 }
 </style>
